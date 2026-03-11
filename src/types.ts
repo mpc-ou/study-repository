@@ -97,6 +97,44 @@ export interface CourseDetail {
   qa: QAEntry[];
 }
 
+// ========== Output: stats.json ==========
+
+export interface CourseStats {
+  name: string;
+  courseName: string;
+  courseCode: string;
+  docs: number;
+  exams: number;
+  qaSets: number;
+  qaQuestions: number;
+}
+
+export interface FacultyStats {
+  name: string;
+  totalCourses: number;
+  totalDocs: number;
+  totalExams: number;
+  totalQaSets: number;
+  totalQaQuestions: number;
+  courses: CourseStats[];
+}
+
+export interface Stats {
+  generatedAt: string;
+  totalFaculties: number;
+  totalCourses: number;
+  totalDocs: number;
+  totalExams: number;
+  totalQaSets: number;
+  totalQaQuestions: number;
+  totalAuthors: number;
+  totalKeywords: number;
+  coursesByType: Record<string, number>;
+  qaByDifficulty: Record<string, number>;
+  authors: string[];
+  faculties: FacultyStats[];
+}
+
 // ========== Lint ==========
 
 export interface LintError {

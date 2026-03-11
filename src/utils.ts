@@ -2,15 +2,10 @@ import * as fs from "fs";
 import * as path from "path";
 import type { MarkdownMeta } from "./types";
 
-/**
- * Parse JSON that may have trailing single-line comments (// ...)
- * Extracts the first complete JSON object from the content.
- */
 export function parseJsonSafe(content: string): any {
   const firstBrace = content.indexOf("{");
   const lastBrace = content.lastIndexOf("}");
   if (firstBrace === -1 || lastBrace === -1) {
-    // Try array
     const firstBracket = content.indexOf("[");
     const lastBracket = content.lastIndexOf("]");
     if (firstBracket === -1 || lastBracket === -1) {
@@ -21,10 +16,6 @@ export function parseJsonSafe(content: string): any {
   return JSON.parse(content.substring(firstBrace, lastBrace + 1));
 }
 
-/**
- * Find thumbnail file in a directory.
- * Accepts: thumbnail.jpg, thumbnail.jpeg, thumbnail.png, thumbnail.webp
- */
 export function findThumbnail(dir: string): string | null {
   const extensions = [".jpg", ".jpeg", ".png", ".webp"];
   for (const ext of extensions) {
@@ -36,10 +27,6 @@ export function findThumbnail(dir: string): string | null {
   return null;
 }
 
-/**
- * Parse the <!-- INFO --> ... <!-- CONTENT --> metadata block from a markdown file.
- * Returns parsed metadata and the clean content (after <!-- CONTENT -->).
- */
 export function parseMarkdownInfo(
   content: string
 ): { meta: MarkdownMeta; content: string } | null {
@@ -73,7 +60,6 @@ export function parseMarkdownInfo(
     meta.thumbnail = thumbnailMatch[1];
   }
 
-  // Extract content after <!-- CONTENT -->
   const contentIdx = content.indexOf("<!-- CONTENT -->");
   const cleanContent =
     contentIdx !== -1
@@ -83,12 +69,10 @@ export function parseMarkdownInfo(
   return { meta: meta as MarkdownMeta, content: cleanContent };
 }
 
-/** Check if a name should be skipped (starts with _) */
 export function shouldSkip(name: string): boolean {
   return name.startsWith("_");
 }
 
-/** Get immediate subdirectory names */
 export function getSubdirectories(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
   return fs
@@ -98,7 +82,6 @@ export function getSubdirectories(dir: string): string[] {
     .sort();
 }
 
-/** Get files matching given extensions */
 export function getFiles(dir: string, extensions: string[]): string[] {
   if (!fs.existsSync(dir)) return [];
   return fs
@@ -110,12 +93,6 @@ export function getFiles(dir: string, extensions: string[]): string[] {
     .sort();
 }
 
-/**
- * Recursively copy a directory.
- * - Skips directories whose names start with "_"
- * - Optionally skips specific directory names (e.g. "info")
- * - Optionally strips <!-- INFO --> sections from markdown files
- */
 export function copyDir(
   src: string,
   dest: string,
