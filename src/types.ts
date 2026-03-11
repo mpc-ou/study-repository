@@ -135,6 +135,26 @@ export interface Stats {
   faculties: FacultyStats[];
 }
 
+// ========== Search Index ==========
+
+export interface SearchEntry {
+  id: number;
+  type: "doc" | "exam" | "qa";
+  title: string;
+  author: string;
+  date?: string;
+  summary?: string;
+  description?: string;
+  keywords: string[];
+  category?: string;
+  difficulty?: string;
+  faculty: string;
+  course: string;
+  courseName: string;
+  courseCode: string;
+  file: string;
+}
+
 // ========== Lint ==========
 
 export interface LintError {
