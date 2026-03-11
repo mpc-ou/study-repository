@@ -31,7 +31,7 @@ hello_world()
 ```
 
 ### Hình ảnh
-![Mô tả hình ảnh](./images/example.png)
+![Mô tả hình ảnh](./images/thumbnail-c1.jpg)
 
 ## 1.3 Kết luận
 Tóm tắt các điểm chính đã học được trong chương này.
