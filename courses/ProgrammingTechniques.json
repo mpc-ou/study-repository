@@ -1,0 +1,56 @@
+{
+  "courseName": "Kỹ thuật lập trình",
+  "courseCode": "ITEC1504",
+  "courseCredit": "3",
+  "courseType": "MAJOR",
+  "courseDescription": "Là môn học cung cấp kiến thức cơ bản về lập trình, giúp sinh viên nắm vững các khái niệm và kỹ thuật lập trình cơ bản, từ đó phát triển kỹ năng giải quyết vấn đề và xây dựng các ứng dụng phần mềm.",
+  "thumbnail": "data/IT/ProgrammingTechniques/info/thumbnail.jpg",
+  "faculty": "IT",
+  "docs": [
+    {
+      "title": "Chương 1: Giới thiệu về môn học",
+      "author": "Tên tác giả",
+      "date": "Ngày xuất bản",
+      "summary": "Tóm tắt nội dung chính của chương này",
+      "keywords": [
+        "từ khóa 1",
+        "từ khóa 2",
+        "từ khóa 3"
+      ],
+      "file": "data/IT/ProgrammingTechniques/docs/chuong-1.md",
+      "thumbnail": "data/IT/ProgrammingTechniques/docs/images/thumbnail-c1.jpg"
+    }
+  ],
+  "exams": [
+    {
+      "title": "Đề Thi Kỹ Thuật Lập Trình 2025 - Cuối Kì",
+      "author": "Tên tác giả",
+      "date": "Ngày xuất bản",
+      "summary": "Tóm tắt nội dung chính của chương này",
+      "keywords": [
+        "từ khóa 1",
+        "từ khóa 2",
+        "từ khóa 3"
+      ],
+      "file": "data/IT/ProgrammingTechniques/exams/de-mau-1.md"
+    }
+  ],
+  "qa": [
+    {
+      "title": "Chương 1: Mảng nhiều chiều",
+      "author": "AI Assistant",
+      "description": "Bộ câu hỏi trắc nghiệm chương 1 về Mảng nhiều chiều trong C++ bao gồm lý thuyết khai báo, khởi tạo, truy xuất và các bài tập thực hành trên ma trận.",
+      "keywords": [
+        "C++",
+        "mảng 2 chiều",
+        "kiểu dữ liệu",
+        "khai báo biến",
+        "trắc nghiệm",
+        "ma trận"
+      ],
+      "category": "Programming",
+      "difficulty": "Medium",
+      "file": "data/IT/ProgrammingTechniques/qa/c1.json"
+    }
+  ]
+}

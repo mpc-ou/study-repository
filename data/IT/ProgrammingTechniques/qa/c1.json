@@ -1,0 +1,175 @@
+{
+    "title": "Chương 1: Mảng nhiều chiều",
+    "author": "AI Assistant",
+    "description": "Bộ câu hỏi trắc nghiệm chương 1 về Mảng nhiều chiều trong C++ bao gồm lý thuyết khai báo, khởi tạo, truy xuất và các bài tập thực hành trên ma trận.",
+    "keywords": ["C++", "mảng 2 chiều", "kiểu dữ liệu", "khai báo biến", "trắc nghiệm", "ma trận"],
+    "category": "Programming",
+    "difficulty": "Medium",
+    "data": [
+        {
+            "question": "Mảng 2 chiều (two-dimensional array) trong C++ được hiểu là gì?",
+            "options": [
+                "Là một tập hợp các phần tử có kiểu dữ liệu khác nhau được lưu trữ liên tiếp.",
+                "Là một cấu trúc dữ liệu lưu trữ dữ liệu theo dạng bảng (table) gồm nhiều dòng (row) và nhiều cột (column).",
+                "Là một hàm đệ quy gọi lại chính nó nhiều lần.",
+                "Là một biến đơn chỉ lưu trữ được một giá trị duy nhất."
+            ],
+            "answer": 1,
+            "explanation": "Mảng 2 chiều (two - dimensional array) lưu dữ liệu theo dạng bảng (table) dưới dạng gồm nhiều dòng (row) và nhiều cột (column)[cite: 4305]."
+        },
+        {
+            "question": "Cú pháp khai báo mảng 2 chiều nào sau đây là ĐÚNG trong C++?",
+            "options": [
+                "dataType arrayName[numberOfColumns][numberOfRows];",
+                "arrayName dataType[numberOfRows][numberOfColumns];",
+                "dataType arrayName[numberOfRows][numberOfColumns];",
+                "dataType arrayName(numberOfRows, numberOfColumns);"
+            ],
+            "answer": 2,
+            "explanation": "Cú pháp khai báo mảng 2 chiều chuẩn là: dataType arrayName[numberOfRows][numberOfColumns]; trong đó numberOfRows là tổng số dòng và numberOfColumns là tổng số cột[cite: 4342, 4343, 4344, 4345, 4346, 4347]."
+        },
+        {
+            "question": "Cho khai báo: `double diem[3][4];`. Mảng này có thể lưu trữ tối đa bao nhiêu phần tử?",
+            "options": [
+                "3",
+                "4",
+                "7",
+                "12"
+            ],
+            "answer": 3,
+            "explanation": "Mảng có 3 dòng và 4 cột, tổng số lượng phần tử tối đa có thể lưu trữ là 3 x 4 = 12 phần tử[cite: 4356, 4357]."
+        },
+        {
+            "question": "Phần tử nằm ở dòng đầu tiên, cột đầu tiên của mảng 2 chiều `a` được truy xuất bằng chỉ số nào?",
+            "options": [
+                "a[1][1]",
+                "a[0][0]",
+                "a[0][1]",
+                "a[1][0]"
+            ],
+            "answer": 1,
+            "explanation": "Trong C++, chỉ số của mảng bắt đầu từ 0. Do đó, phần tử ở dòng đầu tiên và cột đầu tiên có chỉ số là a[0][0][cite: 4319, 4331, 4335]."
+        },
+        {
+            "question": "Lệnh khởi tạo `int a[3][2] = { {0} };` có tác dụng gì?",
+            "options": [
+                "Khởi tạo phần tử đầu tiên a[0][0] bằng 0, các phần tử còn lại mang giá trị rác.",
+                "Báo lỗi cú pháp vì thiếu số lượng phần tử.",
+                "Khởi tạo tất cả các phần tử trong mảng a có giá trị bằng 0.",
+                "Chỉ khởi tạo các phần tử trên dòng đầu tiên bằng 0."
+            ],
+            "answer": 2,
+            "explanation": "Cú pháp `int a[3][2] = { {0} };` là cách viết rút gọn để khởi tạo tất cả các phần tử trong mảng 2 chiều đều mang giá trị 0[cite: 4382, 4383, 4387, 4388, 4389, 4390, 4391, 4392]."
+        },
+        {
+            "question": "Để tìm giá trị nhỏ nhất (min) trong mảng 2 chiều, ta nên khởi tạo biến `min` bằng giá trị nào trước khi duyệt mảng?",
+            "options": [
+                "Khởi tạo min = 0.",
+                "Khởi tạo min bằng một số âm rất lớn.",
+                "Khởi tạo min là giá trị của phần tử đầu tiên trong mảng (ví dụ: a[0][0]).",
+                "Khởi tạo min bằng số phần tử của mảng."
+            ],
+            "answer": 2,
+            "explanation": "Nên khởi tạo min là giá trị đầu tiên trong mảng, rồi tiến hành so sánh min với các giá trị còn lại trong quá trình duyệt mảng để tìm min chính xác nhất[cite: 4661]."
+        },
+        {
+            "question": "Trong mảng vuông cấp n (số dòng bằng số cột), các phần tử nằm trên đường chéo chính có đặc điểm gì về chỉ số dòng (i) và cột (j)?",
+            "options": [
+                "i + j = n - 1",
+                "i = j",
+                "i > j",
+                "i < j"
+            ],
+            "answer": 1,
+            "explanation": "Các vị trí trên đường chéo chính có chỉ số dòng và cột bằng nhau, ví dụ: [0][0], [1][1], [2][2][cite: 4688]."
+        },
+        {
+            "question": "Khi truyền mảng 2 chiều vào hàm trong C++, điều nào sau đây là BẮT BUỘC?",
+            "options": [
+                "Phải truyền kích thước của số dòng tối đa.",
+                "Phải truyền kích thước của số cột tối đa.",
+                "Không cần truyền kích thước của cả dòng và cột.",
+                "Phải bỏ qua tất cả các tham số kích thước."
+            ],
+            "answer": 1,
+            "explanation": "Có thể bỏ qua tham số dòng tối đa lưu trữ, nhưng tham số số cột tối đa (tham số thứ 2) là bắt buộc phải có khi khai báo tham số hàm (ví dụ: `void nhap(int a[][4], int r);`)[cite: 4559, 4560]."
+        },
+        {
+            "question": "Mảng 2 chiều khi truyền vào hàm sẽ được truyền theo dạng nào?",
+            "options": [
+                "Truyền tham trị (Pass by value).",
+                "Truyền tham chiếu (Pass by reference).",
+                "Truyền bản sao của mảng.",
+                "Tùy thuộc vào kiểu dữ liệu của mảng."
+            ],
+            "answer": 1,
+            "explanation": "Mảng 2 chiều truyền vào hàm theo tham chiếu. Do đó nên truyền tham số hằng nếu chỉ dùng cho việc xuất mảng để tránh thay đổi dữ liệu[cite: 4556]."
+        },
+        {
+            "question": "Đoạn mã sau thực hiện công việc gì?\n```cpp\nint tong = 0;\nfor (int i = 0; i < r; i++)\n    for (int j = 0; j < c; j++)\n        tong += a[i][j];\n```",
+            "options": [
+                "Đếm số lượng phần tử dương trong mảng.",
+                "Tính tổng các phần tử trên đường chéo chính.",
+                "Tính tổng toàn bộ các giá trị lưu trữ trong mảng 2 chiều.",
+                "Tính tích toàn bộ các phần tử trong mảng 2 chiều."
+            ],
+            "answer": 2,
+            "explanation": "Đoạn mã duyệt qua tất cả các phần tử `a[i][j]` bằng 2 vòng lặp lồng nhau và cộng dồn vào biến `tong`, dùng để tính tổng toàn bộ các giá trị lưu trữ trong mảng 2 chiều[cite: 4478, 4479, 4480, 4481, 4482]."
+        },
+        {
+            "question": "Giả sử bạn cần quản lý điểm của 40 học sinh, mỗi học sinh có 13 môn học. Khai báo nào sau đây là phù hợp nhất?",
+            "options": [
+                "float diem[13][40];",
+                "float diem[40][13];",
+                "int diem[40][40];",
+                "int diem[13][13];"
+            ],
+            "answer": 1,
+            "explanation": "Theo bài toán lưu trữ điểm số 13 môn học của 40 học sinh, việc khai báo mảng với 40 dòng (tương ứng 40 học sinh) và 13 cột (tương ứng 13 môn học) sẽ trực quan và dễ quản lý dữ liệu theo từng học sinh nhất[cite: 4233, 4234, 4280, 4281, 4286, 4287, 4292]."
+        },
+        {
+            "question": "Để tìm xem giá trị `x` có tồn tại trong mảng 2 chiều hay không, ta thường sử dụng phương pháp nào?",
+            "options": [
+                "Dùng câu lệnh lặp để duyệt và so sánh giá trị đang duyệt với giá trị cần tìm, kết hợp biến cờ hiệu (flag).",
+                "Chỉ cần kiểm tra phần tử đầu tiên và phần tử cuối cùng của mảng.",
+                "Cộng tất cả các phần tử lại và chia cho x.",
+                "Sắp xếp mảng trước rồi mới tìm."
+            ],
+            "answer": 0,
+            "explanation": "Tìm kiếm trong mảng hai chiều thường dùng câu lệnh lặp để duyệt qua các phần tử và so sánh giá trị đang duyệt `a[i][j]` với giá trị `x` cần tìm, thường dùng thêm biến `flag` để ghi nhận kết quả[cite: 4523, 4525, 4528, 4529, 4530, 4531, 4532]."
+        },
+        {
+            "question": "Vị trí cột và hàng hợp lệ đối với mảng 2 chiều khai báo là `a[MAXROW][MAXCOL]` sẽ nằm trong khoảng nào?",
+            "options": [
+                "Từ 1 đến MAXROW và 1 đến MAXCOL.",
+                "Từ 0 đến MAXROW - 1 và 0 đến MAXCOL - 1.",
+                "Từ 0 đến MAXROW và 0 đến MAXCOL.",
+                "Từ -1 đến MAXROW và -1 đến MAXCOL."
+            ],
+            "answer": 1,
+            "explanation": "Vị trí cột hay hàng hợp lệ là vị trí từ 0 đến số lượng phần tử tối đa trên cột hay hàng trừ 1[cite: 4675]."
+        },
+        {
+            "question": "Đâu là nhược điểm của mảng kiểu C (C-style arrays)?",
+            "options": [
+                "Không thể lưu trữ được các số thực.",
+                "Không thể truyền được vào trong các hàm.",
+                "Kích thước của mảng không thay đổi được trong thời gian thực thi (runtime).",
+                "Phải khởi tạo tất cả các giá trị ngay khi khai báo."
+            ],
+            "answer": 2,
+            "explanation": "Nhược điểm lớn nhất của mảng kiểu C là kích thước của mảng đã được cố định từ trước và không thể thay đổi được trong thời gian thực thi chương trình[cite: 4634, 4638]."
+        },
+        {
+            "question": "Khi khai báo `const int MAXROW = 10, MAXCOL = 5; int a[MAXROW][MAXCOL];`, tổng số bộ nhớ cấp phát cho mảng `a` nếu kiểu `int` chiếm 4 bytes là:",
+            "options": [
+                "50 bytes",
+                "200 bytes",
+                "100 bytes",
+                "40 bytes"
+            ],
+            "answer": 1,
+            "explanation": "Mảng có tối đa 10 dòng và 5 cột (tổng cộng 50 phần tử)[cite: 4403]. Nếu mỗi phần tử int chiếm 4 bytes, tổng bộ nhớ = 50 * 4 = 200 bytes."
+        }
+    ]
+}
