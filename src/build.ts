@@ -318,11 +318,28 @@ function build(): void {
   console.log("\n   🔍 Building search index...");
   buildSearchIndex(searchEntries, OUTPUT_DIR);
 
+  // ----- Generate last_update.json (cache busting) -----
+  const lastUpdate = {
+    timestamp: new Date().toISOString(),
+    epoch: Date.now(),
+    totalCourses: mainEntries.length,
+    totalDocs,
+    totalExams,
+    totalQaSets,
+    totalSearchEntries: searchEntries.length,
+  };
+  fs.writeFileSync(
+    path.join(OUTPUT_DIR, "last_update.json"),
+    JSON.stringify(lastUpdate, null, 2),
+    "utf-8"
+  );
+
   console.log(`\n✅ Build complete!`);
   console.log(`   📄 main.json: ${mainEntries.length} course(s)`);
   console.log(`   📂 courses/: ${mainEntries.length} file(s)`);
   console.log(`   📊 stats.json: ${faculties.length} faculties, ${mainEntries.length} courses, ${totalDocs} docs, ${totalExams} exams, ${totalQaSets} qa sets (${totalQaQuestions} questions)`);
   console.log(`   🔍 search-index.json: ${searchEntries.length} entries indexed`);
+  console.log(`   🕐 last_update.json: ${lastUpdate.timestamp}`);
 }
 
 build();
