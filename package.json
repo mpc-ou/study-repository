@@ -1,0 +1,16 @@
+{
+  "name": "study-repository",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Archive of learning materials - static API server via GitHub Pages",
+  "scripts": {
+    "lint": "tsx src/lint.ts",
+    "build": "tsx src/build.ts",
+    "dev": "tsx src/build.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,43 @@
+{
+    "title": "Biến trong C++",
+    "author": "John Doe",
+    "description": "Bộ câu hỏi trắc nghiệm về biến trong C++ để kiểm tra kiến thức cơ bản của bạn về cách khai báo và sử dụng biến trong ngôn ngữ lập trình C++.",
+    "keywords": ["C++", "biến", "kiểu dữ liệu", "khai báo biến", "trắc nghiệm"],
+    "category": "Programming",
+    "difficulty": "Easy",
+    "data": [
+        {
+            "question": "Biến trong C++ là gì?",
+            "options": [
+                "Biến là một vị trí lưu trữ được đặt tên trong bộ nhớ có thể chứa một giá trị.",
+                "Biến là một hàm thực hiện một nhiệm vụ cụ thể.",
+                "Biến là một loại vòng lặp được sử dụng để lặp lại.",
+                "Biến là một từ khóa được sử dụng cho các câu lệnh điều kiện."
+            ],
+            "answer": 0,
+            "explanation": "Trong C++, biến là một vị trí lưu trữ được đặt tên trong bộ nhớ có thể chứa một giá trị. Nó được sử dụng để lưu trữ dữ liệu có thể được thao tác và truy cập suốt chương trình."
+        },
+        {
+            "question": "Làm thế nào để khai báo một biến trong C++?",
+            "options": [
+                "variable int x;",
+                "int x;",
+                "declare int x;",
+                "x int;"
+            ],
+            "answer": 1,
+            "explanation": "Trong C++, bạn khai báo một biến bằng cách chỉ định kiểu dữ liệu của nó theo sau là tên của nó. Ví dụ, 'int x;' khai báo một biến nguyên thủy có tên 'x'."
+        },
+        {
+            "question": "Trong C++, tên biến hợp lệ là gì?",
+            "options": [
+                "1variable",
+                "_variable",
+                "variable-name",
+                "variable name"
+            ],
+            "answer": 1,
+            "explanation": "Trong C++, tên biến hợp lệ phải bắt đầu bằng một chữ cái hoặc dấu gạch dưới và có thể theo sau bởi các chữ cái, chữ số hoặc dấu gạch dưới. Nó không thể bắt đầu bằng một chữ số hoặc chứa khoảng trắng hoặc dấu gạch ngang. Do đó, '_variable' là một tên biến hợp lệ."
+        }
+    ]
+}

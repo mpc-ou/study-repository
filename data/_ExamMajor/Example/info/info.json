@@ -1,0 +1,10 @@
+{
+    "courseName": "Tên môn học",
+    "courseCode": "Mã môn học",
+    "courseCredit": "Số tín chỉ",
+    "courseType": "MAJOR",
+    "courseDescription": "Mô tả về môn học"
+}
+
+// Lưu ý: Đây chỉ là một ví dụ về cấu trúc của file info.json. Bạn có thể thêm hoặc sửa đổi các trường thông tin theo nhu cầu của bạn.
+// courseType gồm ba loại: GENARAL (đại cương), MAJOR (chuyên ngành), ELECTIVE (tự chọn). Bạn có thể sử dụng các giá trị này để phân loại các môn học trong hệ thống của bạn.
