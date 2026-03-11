@@ -63,12 +63,10 @@ function lint(): LintError[] {
       const courseDir = path.join(facultyDir, course);
       const prefix = `data/${faculty}/${course}`;
 
-      // Check required directories
       const existingDirs = REQUIRED_COURSE_DIRS.filter((dir) =>
         fs.existsSync(path.join(courseDir, dir))
       );
 
-      // Completely empty course = placeholder, skip with warning
       if (existingDirs.length === 0) {
         errors.push({
           path: `${prefix}/`,
@@ -89,7 +87,6 @@ function lint(): LintError[] {
         }
       }
 
-      // ===== Validate info =====
       const infoDir = path.join(courseDir, "info");
       if (fs.existsSync(infoDir)) {
         const infoJsonPath = path.join(infoDir, "info.json");
@@ -134,7 +131,6 @@ function lint(): LintError[] {
           }
         }
 
-        // Check thumbnail
         const thumbnail = findThumbnail(infoDir);
         if (!thumbnail) {
           errors.push({
@@ -146,7 +142,6 @@ function lint(): LintError[] {
         }
       }
 
-      // ===== Validate docs =====
       const docsDir = path.join(courseDir, "docs");
       if (fs.existsSync(docsDir)) {
         const mdFiles = getFiles(docsDir, [".md"]);
@@ -193,7 +188,6 @@ function lint(): LintError[] {
         }
       }
 
-      // ===== Validate exams =====
       const examsDir = path.join(courseDir, "exams");
       if (fs.existsSync(examsDir)) {
         const mdFiles = getFiles(examsDir, [".md"]);
@@ -228,7 +222,6 @@ function lint(): LintError[] {
         }
       }
 
-      // ===== Validate QA =====
       const qaDir = path.join(courseDir, "qa");
       if (fs.existsSync(qaDir)) {
         const jsonFiles = getFiles(qaDir, [".json"]);
@@ -307,7 +300,6 @@ function lint(): LintError[] {
   return errors;
 }
 
-// ===== Run =====
 const errors = lint();
 const errorCount = errors.filter((e) => e.severity === "error").length;
 const warnCount = errors.filter((e) => e.severity === "warning").length;

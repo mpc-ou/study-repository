@@ -15,6 +15,9 @@ import type {
   DocEntry,
   ExamEntry,
   QAEntry,
+  Stats,
+  FacultyStats,
+  CourseStats,
 } from "./types";
 
 const ROOT_DIR = process.cwd();
@@ -26,7 +29,6 @@ function build(): void {
   console.log(`   Data:   ${DATA_DIR}`);
   console.log(`   Output: ${OUTPUT_DIR}\n`);
 
-  // Clean output
   if (fs.existsSync(OUTPUT_DIR)) {
     fs.rmSync(OUTPUT_DIR, { recursive: true });
   }
@@ -34,18 +36,37 @@ function build(): void {
   fs.mkdirSync(path.join(OUTPUT_DIR, "courses"), { recursive: true });
 
   const mainEntries: MainEntry[] = [];
+  const facultyStatsMap: Record<string, FacultyStats> = {};
+  const allAuthors = new Set<string>();
+  const allKeywords = new Set<string>();
+  const courseTypeCount: Record<string, number> = {};
+  const difficultyCount: Record<string, number> = {};
+  let totalDocs = 0;
+  let totalExams = 0;
+  let totalQaSets = 0;
+  let totalQaQuestions = 0;
 
-  // Get faculties (skip _ prefixed like _ExamMajor)
   const faculties = getSubdirectories(DATA_DIR).filter((f) => !shouldSkip(f));
 
   for (const faculty of faculties) {
     const facultyDir = path.join(DATA_DIR, faculty);
     const courses = getSubdirectories(facultyDir);
 
+    if (!facultyStatsMap[faculty]) {
+      facultyStatsMap[faculty] = {
+        name: faculty,
+        totalCourses: 0,
+        totalDocs: 0,
+        totalExams: 0,
+        totalQaSets: 0,
+        totalQaQuestions: 0,
+        courses: [],
+      };
+    }
+
     for (const course of courses) {
       const courseDir = path.join(facultyDir, course);
 
-      // Must have info/info.json to be a valid course
       const infoPath = path.join(courseDir, "info", "info.json");
       if (!fs.existsSync(infoPath)) {
         console.log(`   ⏭️  Skipping ${faculty}/${course} (no info.json)`);
@@ -57,14 +78,12 @@ function build(): void {
       const infoContent = fs.readFileSync(infoPath, "utf-8");
       const info = parseJsonSafe(infoContent);
 
-      // Find thumbnail
       const infoDir = path.join(courseDir, "info");
       const thumbnailFile = findThumbnail(infoDir);
       const thumbnailPath = thumbnailFile
         ? `data/${faculty}/${course}/info/${thumbnailFile}`
         : "";
 
-      // ----- Process docs -----
       const docsDir = path.join(courseDir, "docs");
       const docFiles = getFiles(docsDir, [".md"]);
       const docs: DocEntry[] = [];
@@ -88,7 +107,6 @@ function build(): void {
         }
       }
 
-      // ----- Process exams -----
       const examsDir = path.join(courseDir, "exams");
       const examFiles = getFiles(examsDir, [".md"]);
       const exams: ExamEntry[] = [];
@@ -111,7 +129,6 @@ function build(): void {
         }
       }
 
-      // ----- Process QA -----
       const qaDir = path.join(courseDir, "qa");
       const qaFiles = getFiles(qaDir, [".json"]);
       const qa: QAEntry[] = [];
@@ -119,6 +136,17 @@ function build(): void {
       for (const qaFile of qaFiles) {
         const qaContent = fs.readFileSync(path.join(qaDir, qaFile), "utf-8");
         const qaData = parseJsonSafe(qaContent);
+        const questionCount = Array.isArray(qaData.data) ? qaData.data.length : 0;
+        totalQaQuestions += questionCount;
+
+        if (qaData.difficulty) {
+          difficultyCount[qaData.difficulty] = (difficultyCount[qaData.difficulty] || 0) + 1;
+        }
+        if (qaData.keywords) {
+          qaData.keywords.forEach((k: string) => allKeywords.add(k));
+        }
+        if (qaData.author) allAuthors.add(qaData.author);
+
         qa.push({
           title: qaData.title || "",
           author: qaData.author || "",
@@ -130,7 +158,41 @@ function build(): void {
         });
       }
 
-      // ----- Build course detail -----
+      totalDocs += docs.length;
+      totalExams += exams.length;
+      totalQaSets += qa.length;
+      courseTypeCount[info.courseType] = (courseTypeCount[info.courseType] || 0) + 1;
+
+      for (const d of docs) {
+        if (d.author) allAuthors.add(d.author);
+        d.keywords.forEach((k) => allKeywords.add(k));
+      }
+      for (const e of exams) {
+        if (e.author) allAuthors.add(e.author);
+        e.keywords.forEach((k) => allKeywords.add(k));
+      }
+
+      const courseStat: CourseStats = {
+        name: course,
+        courseName: info.courseName,
+        courseCode: info.courseCode,
+        docs: docs.length,
+        exams: exams.length,
+        qaSets: qa.length,
+        qaQuestions: qa.reduce((sum, q) => {
+          const qaContent = fs.readFileSync(path.join(qaDir, q.file.split("/").pop()!), "utf-8");
+          const qaData = parseJsonSafe(qaContent);
+          return sum + (Array.isArray(qaData.data) ? qaData.data.length : 0);
+        }, 0),
+      };
+
+      facultyStatsMap[faculty].totalCourses++;
+      facultyStatsMap[faculty].totalDocs += docs.length;
+      facultyStatsMap[faculty].totalExams += exams.length;
+      facultyStatsMap[faculty].totalQaSets += qa.length;
+      facultyStatsMap[faculty].totalQaQuestions += courseStat.qaQuestions;
+      facultyStatsMap[faculty].courses.push(courseStat);
+
       const courseDetail: CourseDetail = {
         courseName: info.courseName,
         courseCode: info.courseCode,
@@ -144,7 +206,6 @@ function build(): void {
         qa,
       };
 
-      // Write courses/{Course}.json
       const courseJsonPath = path.join(OUTPUT_DIR, "courses", `${course}.json`);
       fs.writeFileSync(
         courseJsonPath,
@@ -152,7 +213,6 @@ function build(): void {
         "utf-8"
       );
 
-      // Add to main index
       mainEntries.push({
         courseName: info.courseName,
         courseCode: info.courseCode,
@@ -166,22 +226,43 @@ function build(): void {
     }
   }
 
-  // Write main.json
   fs.writeFileSync(
     path.join(OUTPUT_DIR, "main.json"),
     JSON.stringify(mainEntries, null, 2),
     "utf-8"
   );
 
-  // Copy data/ to output (skip _ prefixed dirs, strip INFO from markdowns)
   console.log("\n   📂 Copying data...");
   copyDir(DATA_DIR, path.join(OUTPUT_DIR, "data"), {
     transformMarkdown: true,
   });
 
+  const stats: Stats = {
+    generatedAt: new Date().toISOString(),
+    totalFaculties: faculties.length,
+    totalCourses: mainEntries.length,
+    totalDocs,
+    totalExams,
+    totalQaSets,
+    totalQaQuestions,
+    totalAuthors: allAuthors.size,
+    totalKeywords: allKeywords.size,
+    coursesByType: courseTypeCount,
+    qaByDifficulty: difficultyCount,
+    authors: [...allAuthors].sort(),
+    faculties: Object.values(facultyStatsMap),
+  };
+
+  fs.writeFileSync(
+    path.join(OUTPUT_DIR, "stats.json"),
+    JSON.stringify(stats, null, 2),
+    "utf-8"
+  );
+
   console.log(`\n✅ Build complete!`);
   console.log(`   📄 main.json: ${mainEntries.length} course(s)`);
   console.log(`   📂 courses/: ${mainEntries.length} file(s)`);
+  console.log(`   📊 stats.json: ${faculties.length} faculties, ${mainEntries.length} courses, ${totalDocs} docs, ${totalExams} exams, ${totalQaSets} qa sets (${totalQaQuestions} questions)`);
 }
 
 build();
