@@ -18,7 +18,9 @@ import type {
   Stats,
   FacultyStats,
   CourseStats,
+  SearchEntry,
 } from "./types";
+import { buildSearchIndex } from "./search";
 
 const ROOT_DIR = process.cwd();
 const DATA_DIR = path.join(ROOT_DIR, "data");
@@ -45,6 +47,8 @@ function build(): void {
   let totalExams = 0;
   let totalQaSets = 0;
   let totalQaQuestions = 0;
+  const searchEntries: SearchEntry[] = [];
+  let searchId = 0;
 
   const faculties = getSubdirectories(DATA_DIR).filter((f) => !shouldSkip(f));
 
@@ -158,6 +162,57 @@ function build(): void {
         });
       }
 
+      // ----- Collect search entries -----
+      for (const d of docs) {
+        searchEntries.push({
+          id: searchId++,
+          type: "doc",
+          title: d.title,
+          author: d.author,
+          date: d.date,
+          summary: d.summary,
+          keywords: d.keywords,
+          faculty,
+          course,
+          courseName: info.courseName,
+          courseCode: info.courseCode,
+          file: d.file,
+        });
+      }
+      for (const e of exams) {
+        searchEntries.push({
+          id: searchId++,
+          type: "exam",
+          title: e.title,
+          author: e.author,
+          date: e.date,
+          summary: e.summary,
+          keywords: e.keywords,
+          faculty,
+          course,
+          courseName: info.courseName,
+          courseCode: info.courseCode,
+          file: e.file,
+        });
+      }
+      for (const q of qa) {
+        searchEntries.push({
+          id: searchId++,
+          type: "qa",
+          title: q.title,
+          author: q.author,
+          description: q.description,
+          keywords: q.keywords,
+          category: q.category,
+          difficulty: q.difficulty,
+          faculty,
+          course,
+          courseName: info.courseName,
+          courseCode: info.courseCode,
+          file: q.file,
+        });
+      }
+
       totalDocs += docs.length;
       totalExams += exams.length;
       totalQaSets += qa.length;
@@ -259,10 +314,15 @@ function build(): void {
     "utf-8"
   );
 
+  // ----- Generate search index -----
+  console.log("\n   🔍 Building search index...");
+  buildSearchIndex(searchEntries, OUTPUT_DIR);
+
   console.log(`\n✅ Build complete!`);
   console.log(`   📄 main.json: ${mainEntries.length} course(s)`);
   console.log(`   📂 courses/: ${mainEntries.length} file(s)`);
   console.log(`   📊 stats.json: ${faculties.length} faculties, ${mainEntries.length} courses, ${totalDocs} docs, ${totalExams} exams, ${totalQaSets} qa sets (${totalQaQuestions} questions)`);
+  console.log(`   🔍 search-index.json: ${searchEntries.length} entries indexed`);
 }
 
 build();

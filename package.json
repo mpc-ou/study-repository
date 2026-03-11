@@ -10,9 +10,13 @@
     "prepare": "husky"
   },
   "devDependencies": {
+    "@types/flexsearch": "^0.7.6",
     "@types/node": "^25.4.0",
     "husky": "^9.1.7",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "flexsearch": "^0.8.212"
   }
 }
