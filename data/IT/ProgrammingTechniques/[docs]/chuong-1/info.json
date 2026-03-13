@@ -1,0 +1,12 @@
+{
+    "title": "Chương 1: Mảng 2 chiều",
+    "description": "Chương này giới thiệu về mảng 2 chiều, cách khai báo, khởi tạo và sử dụng mảng 2 chiều trong lập trình.",
+    "objectives": [
+        "Hiểu khái niệm mảng 2 chiều",
+        "Biết cách khai báo và khởi tạo mảng 2 chiều",
+        "Sử dụng mảng 2 chiều trong các bài toán thực tế"
+    ],
+    "authors": ["MPC"],
+    "date": "2025-01-01",
+    "keywords": ["mảng 2 chiều", "lập trình", "cấu trúc dữ liệu"]
+}

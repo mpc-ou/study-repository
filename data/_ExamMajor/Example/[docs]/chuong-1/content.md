@@ -1,12 +1,3 @@
-<!-- INFO -->
-- title: "Chương 1: Giới thiệu về môn học"
-- author: "Tên tác giả"
-- date: "Ngày xuất bản"
-- summary: "Tóm tắt nội dung chính của chương này"
-- keywords: ["từ khóa 1", "từ khóa 2", "từ khóa 3"]
-- thumbnail: "./images/thumbnail-c1.jpg"
-
-<!-- CONTENT -->
 # Chương 1: Giới thiệu về môn học
 
 ## 1.1 Mục tiêu của môn học
@@ -40,7 +31,7 @@ hello_world()
 ```
 
 ### Hình ảnh
-![Mô tả hình ảnh](./images/example.png)
+![Mô tả hình ảnh](./demo.jpg)
 
 ## 1.3 Kết luận
 Tóm tắt các điểm chính đã học được trong chương này.

@@ -35,7 +35,7 @@ Hàm là gì? Liệt kê các thành phần của một hàm (khai báo, định
 Xem ảnh sau và giải thích ý nghĩa của biểu đồ:
 
 <!-- Chèn ảnh -->
-![Biểu đồ vòng đời phần mềm](./images/templete.jpg)
+![Biểu đồ vòng đời phần mềm](./templete.jpg)
 
 ---
 

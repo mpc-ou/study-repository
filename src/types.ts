@@ -41,32 +41,49 @@ export interface QAFile {
 // ========== Output: entries in courses/*.json ==========
 
 export interface DocEntry {
+  slug: string;
   title: string;
+  description?: string;
   author: string;
+  authors: string[];
   date: string;
-  summary: string;
   keywords: string[];
-  thumbnail?: string;
-  file: string;
+  info: string;
+  content: string;
+  contentType: "md" | "pdf";
+  attachments: string[];
 }
 
 export interface ExamEntry {
+  slug: string;
   title: string;
+  description?: string;
   author: string;
+  authors: string[];
   date: string;
-  summary: string;
   keywords: string[];
-  file: string;
+  info: string;
+  content: string;
+  contentType: "md" | "pdf";
+  attachments: string[];
 }
 
 export interface QAEntry {
+  slug: string;
   title: string;
   author: string;
+  authors?: string[];
   description: string;
   keywords: string[];
   category: string;
   difficulty: string;
-  file: string;
+  file?: string;
+  format: "json" | "content";
+  info?: string;
+  content?: string;
+  contentType?: "md" | "pdf";
+  attachments?: string[];
+  questionCount?: number;
 }
 
 // ========== Output: main.json entry ==========
@@ -140,6 +157,7 @@ export interface Stats {
 export interface SearchEntry {
   id: number;
   type: "doc" | "exam" | "qa";
+  slug: string;
   title: string;
   author: string;
   date?: string;
