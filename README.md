@@ -1,87 +1,239 @@
-# study-repository
+# 📚 study-repository
 
-Kho du lieu hoc tap theo kieu static data server. Nhanh `main` luu du lieu goc, CI/CD build sang nhanh `public` de phuc vu GitHub Pages.
+Kho dữ liệu học tập hoạt động theo mô hình **static data server**.
 
-## Cau truc du lieu (moi)
+* Nhánh `main` dùng để **lưu trữ dữ liệu gốc**.
+* CI/CD sẽ **build dữ liệu và deploy sang nhánh `public`** để phục vụ **GitHub Pages**.
 
-```text
+---
+
+# 📂 Cấu trúc dữ liệu
+
+```
 data/
   <Faculty>/
     <Course>/
       info.json
-      thumbnail.jpg|png|webp|jpeg
+      thumbnail.jpg | png | webp | jpeg
+
       [docs]/
         <doc-slug>/
           info.json
           content.md | content.pdf
           ...attachments
+
       [exams]/
         <exam-slug>/
           info.json
           content.md | content.pdf
           ...attachments
+
       [qa]/
         c1.json
-        # hoac
+        # hoặc
         <qa-slug>/
           info.json
           content.md | content.pdf
           ...attachments
 ```
 
-`data/_...` se bi bo qua khi build.
+⚠️ **Lưu ý:**
+Các thư mục bắt đầu bằng `_` (ví dụ `data/_example`) **sẽ bị bỏ qua khi build**.
 
-## Quy tac bat buoc
+---
 
-1. Moi mon hoc phai co `info.json` tai goc mon va 1 file `thumbnail.*` tai goc mon.
-2. `[docs]` va `[exams]` gom cac thu muc con. Moi thu muc con phai co:
-   - `info.json`
-   - Dung 1 file noi dung: `content.md` hoac `content.pdf`
-   - Co the them attachments khac.
-3. `[qa]` ho tro 2 kieu:
-   - File JSON truc tiep (`c1.json`) cho bo trac nghiem.
-   - Hoac thu muc item theo mo hinh `info.json + content.(md|pdf)`.
+# 📜 Quy tắc bắt buộc
 
-## Build output
+## 1. Cấu trúc môn học
 
-`npm run build` sinh `.dist/`:
+Mỗi môn học bắt buộc phải có:
 
-- `main.json`: danh sach mon hoc
-- `courses/<Course>.json`: metadata chi tiet docs/exams/qa
-- `stats.json`: thong ke tong hop
-- `search-index.json`: catalog tim kiem
-- `search/`: index tim kiem full-text prebuilt
-- `last_update.json`: timestamp + epoch de cache invalidation
-- `data/`: copy du lieu goc (bo qua cac folder bat dau bang `_`)
+* `info.json` tại **thư mục gốc của môn**
+* 1 ảnh **thumbnail** tại gốc môn:
 
-## Scripts
+```
+thumbnail.jpg
+thumbnail.png
+thumbnail.webp
+thumbnail.jpeg
+```
 
-- `npm run lint`: validate format du lieu
-- `npm run build`: build ra `.dist`
-- `npm run check`: lint + build (dung cho CI/CD)
-- `npm run dev`: alias cua build local
+---
 
-## CI/CD
+## 2. Tài liệu (`docs`) và đề thi (`exams`)
 
-### PR (`.github/workflows/pr-check.yml`)
+Hai thư mục này chứa **các thư mục con**, mỗi item phải có:
 
-- Validate PR template checkbox
-- Chay `npm run lint`
-- Chay `npm run build`
-- Verify file output: `main.json`, `courses/`, `data/`, `stats.json`, `search-index.json`, `last_update.json`
+* `info.json`
+* **1 file nội dung duy nhất**:
 
-### Deploy (`.github/workflows/deploy.yml`)
+  * `content.md` hoặc
+  * `content.pdf`
 
-- Trigger khi push vao `main`
-- Chay `npm run check`
-- Deploy `.dist` sang nhanh `public`
+Ngoài ra có thể thêm:
 
-## Mau du lieu
+* hình ảnh
+* file đính kèm
+* dữ liệu bổ sung
 
-Dung `data/_ExamMajor/Example` lam mau khi tao mon moi.
+Ví dụ:
 
-## Contributing
+```
+docs/
+  lecture-1/
+    info.json
+    content.md
+    slides.pdf
+```
 
-Huong dan dong gop chi tiet da duoc tach ra file rieng:
+---
 
-- `CONTRIBUTING.md`
+## 3. Hỏi đáp / Trắc nghiệm (`qa`)
+
+Hỗ trợ **2 dạng dữ liệu**.
+
+### Dạng 1 — JSON trực tiếp
+
+Dùng cho **bộ câu hỏi trắc nghiệm**.
+
+```
+qa/
+  c1.json
+  c2.json
+```
+
+---
+
+### Dạng 2 — Thư mục item
+
+Cấu trúc giống `docs` và `exams`.
+
+```
+qa/
+  bai-tap-1/
+    info.json
+    content.md
+```
+
+---
+
+# ⚙️ Build Output
+
+Chạy:
+
+```
+npm run build
+```
+
+Sẽ sinh thư mục:
+
+```
+.dist/
+```
+
+Bao gồm:
+
+| File                    | Mô tả                                     |
+| ----------------------- | ----------------------------------------- |
+| `main.json`             | Danh sách toàn bộ môn học                 |
+| `courses/<Course>.json` | Metadata chi tiết của từng môn            |
+| `stats.json`            | Thống kê tổng hợp dữ liệu                 |
+| `search-index.json`     | Catalog phục vụ tìm kiếm                  |
+| `search/`               | Index tìm kiếm full-text đã build         |
+| `last_update.json`      | Timestamp + epoch để cache invalidation   |
+| `data/`                 | Bản copy dữ liệu gốc (bỏ qua thư mục `_`) |
+
+---
+
+# 🧰 Scripts
+
+| Script          | Mô tả                                  |
+| --------------- | -------------------------------------- |
+| `npm run lint`  | Kiểm tra và validate format dữ liệu    |
+| `npm run build` | Build dữ liệu ra `.dist`               |
+| `npm run check` | Chạy `lint` + `build` (dùng cho CI/CD) |
+| `npm run dev`   | Alias của build để chạy local          |
+
+---
+
+# 🔄 CI/CD
+
+## PR Check
+
+File workflow:
+
+```
+.github/workflows/pr-check.yml
+```
+
+Khi mở Pull Request sẽ:
+
+1. Validate **PR template checkbox**
+2. Chạy
+
+```
+npm run lint
+```
+
+3. Chạy
+
+```
+npm run build
+```
+
+4. Kiểm tra các file output bắt buộc:
+
+* `main.json`
+* `courses/`
+* `data/`
+* `stats.json`
+* `search-index.json`
+* `last_update.json`
+
+---
+
+## Deploy
+
+File workflow:
+
+```
+.github/workflows/deploy.yml
+```
+
+Trigger khi:
+
+```
+push -> main
+```
+
+Pipeline:
+
+1. Chạy
+
+```
+npm run check
+```
+
+2. Deploy nội dung `.dist` sang **nhánh `public`**
+
+Nhánh `public` được dùng để **serve GitHub Pages**.
+
+---
+
+# 🧪 Dữ liệu mẫu
+
+Khi tạo môn học mới, có thể tham khảo cấu trúc mẫu tại:
+
+```
+data/_ExamMajor/Example
+```
+
+---
+
+# 🤝 Đóng góp
+
+Hướng dẫn đóng góp chi tiết nằm tại:
+
+
+CONTRIBUTING.md
+```
