@@ -1,121 +1,304 @@
-# Contributing
+# 🤝 Contributing
 
-Cam on ban da muon dong gop cho `study-repository`.
+Cảm ơn bạn đã quan tâm và muốn đóng góp cho **`study-repository`**.
 
-## Muc tieu
+Repository này hoạt động như một **static data server** phục vụ dữ liệu học tập.
 
-Repo nay dong vai tro static data server:
+---
 
-- Nhanh `main`: du lieu goc
-- CI/CD build sang nhanh `public`
-- GitHub Pages phuc vu JSON/data da build
+# 🎯 Mục tiêu của repository
 
-## Quy trinh lam viec
+Repo được tổ chức theo mô hình:
 
-1. Fork repo hoac tao branch moi tu `main`.
-2. Dat ten branch ro nghia, vi du: `feat/add-it-course-docs`.
-3. Sua du lieu theo dung format trong `data/_ExamMajor/Example`.
-4. Chay:
-   - `npm run lint`
-   - `npm run build`
-   - hoac `npm run check`
-5. Commit va tao Pull Request vao `main`.
+* **`main`** → lưu trữ **dữ liệu gốc**
+* **CI/CD** → build dữ liệu
+* **`public`** → chứa dữ liệu đã build để phục vụ **GitHub Pages**
 
-## Cau truc du lieu bat buoc
+GitHub Pages sẽ cung cấp:
 
-Moi mon hoc:
+* JSON metadata
+* dữ liệu tài liệu
+* index tìm kiếm
 
-```text
+---
+
+# 🛠 Quy trình đóng góp
+
+1️⃣ **Fork repo** hoặc tạo **branch mới từ `main`**
+
+2️⃣ Đặt tên branch rõ nghĩa, ví dụ:
+
+```
+feat/add-it-course-docs
+fix/update-math-exams
+data/add-physics-qa
+```
+
+3️⃣ Thêm hoặc chỉnh sửa dữ liệu theo đúng format mẫu tại:
+
+```
+data/_ExamMajor/Example
+```
+
+4️⃣ Chạy kiểm tra dữ liệu:
+
+```bash
+npm run lint
+npm run build
+```
+
+Hoặc chạy nhanh:
+
+```bash
+npm run check
+```
+
+5️⃣ Commit thay đổi và tạo **Pull Request vào `main`**
+
+---
+
+# 📂 Cấu trúc dữ liệu bắt buộc
+
+Mỗi môn học phải có cấu trúc:
+
+```
 data/<Faculty>/<Course>/
   info.json
   thumbnail.jpg|jpeg|png|webp
+
   [docs]/
   [exams]/
   [qa]/
 ```
 
-### 1) Course root
+---
 
-- Bat buoc co `info.json` tai goc mon.
-- Bat buoc co 1 file thumbnail dat ten `thumbnail.*`.
+# 1️⃣ Course Root
 
-`info.json` goi y:
+Mỗi môn học **bắt buộc phải có**:
+
+* `info.json`
+* 1 ảnh thumbnail tên `thumbnail.*`
+
+Ví dụ:
+
+```
+data/IT/Programming/
+  info.json
+  thumbnail.png
+```
+
+---
+
+### Ví dụ `info.json`
 
 ```json
 {
-  "courseName": "Ky thuat lap trinh",
+  "courseName": "Kỹ thuật lập trình",
   "courseCode": "ITEC1504",
   "courseCredit": "3",
   "courseType": "MAJOR",
-  "courseDescription": "Mo ta mon hoc"
+  "courseDescription": "Mô tả môn học"
 }
 ```
 
-Gia tri `courseType` hop le: `GENERAL`, `MAJOR`, `ELECTIVE`.
+### Giá trị hợp lệ của `courseType`
 
-### 2) Docs va Exams
+| Giá trị    | Ý nghĩa          |
+| ---------- | ---------------- |
+| `GENERAL`  | Môn đại cương    |
+| `MAJOR`    | Môn chuyên ngành |
+| `ELECTIVE` | Môn tự chọn      |
 
-Moi item trong `[docs]` hoac `[exams]` la 1 thu muc rieng:
+---
 
-```text
+# 2️⃣ Docs và Exams
+
+Mỗi tài liệu hoặc đề thi là **một thư mục riêng**.
+
+Ví dụ:
+
+```
 [docs]/<slug>/
   info.json
   content.md | content.pdf
   ...attachments
 ```
 
-Quy tac:
+### Quy tắc
 
-- Bat buoc `info.json`.
-- Bat buoc dung 1 file noi dung duy nhat: `content.md` hoac `content.pdf`.
-- Khong duoc co 2 file content cung luc.
-- Cac file khac duoc xem la attachments.
+Bắt buộc:
 
-### 3) QA
+* có `info.json`
+* có **1 file nội dung duy nhất**
 
-Ho tro 2 cach:
+```
+content.md
+hoặc
+content.pdf
+```
 
-- Kieu JSON truc tiep: `[qa]/c1.json`
-- Kieu item folder:
+Không được:
 
-```text
+```
+content.md + content.pdf
+```
+
+Các file khác sẽ được coi là **attachments**.
+
+---
+
+# 3️⃣ QA (Hỏi đáp / Trắc nghiệm)
+
+Thư mục `[qa]` hỗ trợ **2 cách lưu dữ liệu**.
+
+---
+
+## Cách 1 — JSON trực tiếp
+
+Dùng cho **bộ câu hỏi trắc nghiệm**.
+
+```
+[qa]/
+  c1.json
+  c2.json
+```
+
+Gợi ý các field nên có:
+
+* `title`
+* `author`
+* `description`
+* `keywords`
+* `category`
+* `difficulty`
+* `data[]`
+
+---
+
+## Cách 2 — Item dạng thư mục
+
+Cấu trúc giống `docs` và `exams`.
+
+```
 [qa]/<slug>/
   info.json
   content.md | content.pdf
   ...attachments
 ```
 
-Neu dung kieu JSON, nen co cac truong:
+---
 
-- `title`, `author`, `description`, `keywords`, `category`, `difficulty`, `data[]`
+# ✅ Kiểm tra trước khi mở PR
 
-## Kiem tra truoc khi mo PR
+Trước khi tạo Pull Request, đảm bảo:
 
-Bat buoc:
+```
+npm run check
+```
 
-- `npm run check` pass (khong co error)
-- PR description danh dau day du cac checkbox bat buoc trong template
+✔ Không có **error**
 
-Cho phep warning trong mot so truong hop (vi du folder placeholder), nhung nen xu ly warning truoc khi merge neu co the.
+PR phải:
 
-## CI/CD hien tai
+* điền đầy đủ **PR template**
+* đánh dấu các **checkbox bắt buộc**
 
-- PR check (`.github/workflows/pr-check.yml`):
-  - Validate PR template
-  - Chay lint
-  - Chay build
-  - Verify output artifacts
-- Deploy (`.github/workflows/deploy.yml`):
-  - Trigger khi push `main`
-  - Chay `npm run check`
-  - Deploy `.dist` sang nhanh `public`
+---
 
-## Luu y quan trong
+### Warning
 
-- Khong dua du lieu thu nghiem vao cac khoa/mon that.
-- Dung `data/_ExamMajor/Example` de sao chep mau.
-- Neu doi schema, phai cap nhat dong bo:
-  - `src/lint.ts`
-  - `src/build.ts`
-  - `README.md`
-  - `CONTRIBUTING.md`
+Một số trường hợp có thể xuất hiện **warning** (ví dụ: folder placeholder).
+
+Tuy nhiên nên cố gắng **xử lý warning trước khi merge** nếu có thể.
+
+---
+
+# ⚙️ CI/CD hiện tại
+
+## PR Check
+
+File workflow:
+
+```
+.github/workflows/pr-check.yml
+```
+
+Khi mở Pull Request, hệ thống sẽ:
+
+1️⃣ Validate PR template
+2️⃣ Chạy `npm run lint`
+3️⃣ Chạy `npm run build`
+4️⃣ Kiểm tra các file output:
+
+```
+main.json
+courses/
+data/
+stats.json
+search-index.json
+last_update.json
+```
+
+---
+
+## Deploy
+
+File workflow:
+
+```
+.github/workflows/deploy.yml
+```
+
+Trigger khi:
+
+```
+push -> main
+```
+
+Pipeline sẽ:
+
+1️⃣ Chạy
+
+```
+npm run check
+```
+
+2️⃣ Deploy `.dist` sang nhánh:
+
+```
+public
+```
+
+Nhánh `public` dùng để **serve GitHub Pages**.
+
+---
+
+# ⚠️ Lưu ý quan trọng
+
+* Không thêm **dữ liệu thử nghiệm** vào các môn thật.
+* Sử dụng dữ liệu mẫu tại:
+
+```
+data/_ExamMajor/Example
+```
+
+khi tạo môn mới.
+
+---
+
+# 🔧 Khi thay đổi schema
+
+Nếu thay đổi cấu trúc dữ liệu hoặc schema, cần cập nhật đồng bộ các file:
+
+```
+src/lint.ts
+src/build.ts
+README.md
+CONTRIBUTING.md
+```
+
+Điều này giúp tránh lỗi khi build và deploy.
+
+
+để repo nhìn **rất chuyên nghiệp khi public trên GitHub**.
