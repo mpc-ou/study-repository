@@ -58,3 +58,6 @@ jobs:
           test -f .dist/main.json && echo "✅ main.json exists" || (echo "❌ main.json missing" && exit 1)
           test -d .dist/courses && echo "✅ courses/ exists" || (echo "❌ courses/ missing" && exit 1)
           test -d .dist/data && echo "✅ data/ exists" || (echo "❌ data/ missing" && exit 1)
+          test -f .dist/stats.json && echo "✅ stats.json exists" || (echo "❌ stats.json missing" && exit 1)
+          test -f .dist/search-index.json && echo "✅ search-index.json exists" || (echo "❌ search-index.json missing" && exit 1)
+          test -f .dist/last_update.json && echo "✅ last_update.json exists" || (echo "❌ last_update.json missing" && exit 1)

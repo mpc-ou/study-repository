@@ -1,318 +1,87 @@
-# 📚 Study Repository
+# study-repository
 
-Kho lưu trữ tài liệu học tập trong phạm vi kiến thức của Trường Đại học Mở TP.HCM.
+Kho du lieu hoc tap theo kieu static data server. Nhanh `main` luu du lieu goc, CI/CD build sang nhanh `public` de phuc vu GitHub Pages.
 
-Repository này hoạt động như một **static API server** thông qua GitHub Pages. Dữ liệu được quản lý trên nhánh `main` và tự động build sang nhánh `public` qua CI/CD.
+## Cau truc du lieu (moi)
 
----
-
-## 📁 Cấu trúc dự án
-
-```
-study-repository/
-├── data/                         # Dữ liệu chính
-│   ├── _ExamMajor/               # Thư mục mẫu (bỏ qua khi build)
-│   │   └── Example/
-│   └── {Khoa}/                   # Tên khoa (VD: IT)
-│       └── {MonHoc}/             # Tên môn học (VD: ProgrammingTechniques)
-│           ├── info/
-│           │   ├── info.json     # Thông tin môn học
-│           │   └── thumbnail.jpg # Ảnh đại diện (.jpg/.png/.webp)
-│           ├── docs/             # Bài đăng lý thuyết
-│           │   ├── *.md
-│           │   └── images/
-│           ├── exams/            # Đề thi
-│           │   ├── *.md
-│           │   └── images/
-│           └── qa/               # Trắc nghiệm
-│               └── *.json
-├── src/                          # Source code build system
-├── .github/                      # GitHub Actions CI/CD
-├── package.json
-└── tsconfig.json
+```text
+data/
+  <Faculty>/
+    <Course>/
+      info.json
+      thumbnail.jpg|png|webp|jpeg
+      [docs]/
+        <doc-slug>/
+          info.json
+          content.md | content.pdf
+          ...attachments
+      [exams]/
+        <exam-slug>/
+          info.json
+          content.md | content.pdf
+          ...attachments
+      [qa]/
+        c1.json
+        # hoac
+        <qa-slug>/
+          info.json
+          content.md | content.pdf
+          ...attachments
 ```
 
-### Nhánh `public` (sau khi build)
+`data/_...` se bi bo qua khi build.
 
-```
-public/
-├── main.json                     # Index tất cả môn học
-├── courses/
-│   └── {MonHoc}.json             # Chi tiết từng môn (docs, exams, qa)
-└── data/                         # Dữ liệu gốc (đã xử lý)
-    └── {Khoa}/{MonHoc}/...
-```
+## Quy tac bat buoc
 
----
+1. Moi mon hoc phai co `info.json` tai goc mon va 1 file `thumbnail.*` tai goc mon.
+2. `[docs]` va `[exams]` gom cac thu muc con. Moi thu muc con phai co:
+   - `info.json`
+   - Dung 1 file noi dung: `content.md` hoac `content.pdf`
+   - Co the them attachments khac.
+3. `[qa]` ho tro 2 kieu:
+   - File JSON truc tiep (`c1.json`) cho bo trac nghiem.
+   - Hoac thu muc item theo mo hinh `info.json + content.(md|pdf)`.
 
-## 🚀 Bắt đầu
+## Build output
 
-### Yêu cầu
+`npm run build` sinh `.dist/`:
 
-- [Node.js](https://nodejs.org/) >= 18
-- npm >= 9
+- `main.json`: danh sach mon hoc
+- `courses/<Course>.json`: metadata chi tiet docs/exams/qa
+- `stats.json`: thong ke tong hop
+- `search-index.json`: catalog tim kiem
+- `search/`: index tim kiem full-text prebuilt
+- `last_update.json`: timestamp + epoch de cache invalidation
+- `data/`: copy du lieu goc (bo qua cac folder bat dau bang `_`)
 
-### Cài đặt
+## Scripts
 
-```bash
-git clone https://github.com/<username>/study-repository.git
-cd study-repository
-npm install
-```
+- `npm run lint`: validate format du lieu
+- `npm run build`: build ra `.dist`
+- `npm run check`: lint + build (dung cho CI/CD)
+- `npm run dev`: alias cua build local
 
-### Các lệnh
+## CI/CD
 
-| Lệnh | Mô tả |
-| --- | --- |
-| `npm run lint` | Kiểm tra format và cấu trúc dữ liệu |
-| `npm run build` | Build ra thư mục `.dist/` (thử nghiệm local) |
-| `npm run dev` | Giống `build` - dùng để phát triển local |
+### PR (`.github/workflows/pr-check.yml`)
 
----
+- Validate PR template checkbox
+- Chay `npm run lint`
+- Chay `npm run build`
+- Verify file output: `main.json`, `courses/`, `data/`, `stats.json`, `search-index.json`, `last_update.json`
 
-## 📝 Hướng dẫn đóng góp
+### Deploy (`.github/workflows/deploy.yml`)
 
-### 1. Thêm môn học mới
+- Trigger khi push vao `main`
+- Chay `npm run check`
+- Deploy `.dist` sang nhanh `public`
 
-Tham khảo mẫu tại `data/_ExamMajor/Example/`.
+## Mau du lieu
 
-**Bước 1:** Tạo thư mục môn học:
+Dung `data/_ExamMajor/Example` lam mau khi tao mon moi.
 
-```
-data/{Khoa}/{TenMonHoc}/
-├── info/
-│   ├── info.json
-│   └── thumbnail.jpg
-├── docs/
-│   └── images/
-├── exams/
-│   └── images/
-└── qa/
-```
+## Contributing
 
-**Bước 2:** Tạo `info/info.json`:
+Huong dan dong gop chi tiet da duoc tach ra file rieng:
 
-```json
-{
-    "courseName": "Kỹ thuật lập trình",
-    "courseCode": "ITEC1504",
-    "courseCredit": "3",
-    "courseType": "MAJOR",
-    "courseDescription": "Mô tả về môn học"
-}
-```
-
-> `courseType` gồm: `GENERAL` (đại cương), `MAJOR` (chuyên ngành), `ELECTIVE` (tự chọn)
-
-**Bước 3:** Thêm ảnh đại diện `info/thumbnail.jpg` (hoặc `.png`, `.webp`)
-
-### 2. Thêm tài liệu lý thuyết (docs)
-
-Tạo file markdown trong `docs/`. Đầu mỗi file **bắt buộc** có phần INFO:
-
-```markdown
-<!-- INFO -->
-- title: "Chương 1: Giới thiệu về môn học"
-- author: "Tên tác giả"
-- date: "2025-01-01"
-- summary: "Tóm tắt nội dung chính của chương này"
-- keywords: ["từ khóa 1", "từ khóa 2", "từ khóa 3"]
-- thumbnail: "./images/thumbnail-c1.jpg"
-
-<!-- CONTENT -->
-# Nội dung bắt đầu ở đây...
-```
-
-> `thumbnail` là tùy chọn, các trường khác bắt buộc.
-
-Hình ảnh đặt trong thư mục `docs/images/`.
-
-### 3. Thêm đề thi (exams)
-
-Tương tự docs, tạo file markdown trong `exams/` với phần INFO:
-
-```markdown
-<!-- INFO -->
-- title: "Đề Thi Kỹ Thuật Lập Trình 2025 - Cuối Kì"
-- author: "Tên tác giả"
-- date: "2025-06-15"
-- summary: "Đề thi cuối kì môn KTLT"
-- keywords: ["đề thi", "cuối kì", "KTLT"]
-
-<!-- CONTENT -->
-# Nội dung đề thi...
-```
-
-Hình ảnh đặt trong thư mục `exams/images/`.
-
-### 4. Thêm câu hỏi trắc nghiệm (qa)
-
-Tạo file JSON trong `qa/`:
-
-```json
-{
-    "title": "Biến trong C++",
-    "author": "John Doe",
-    "description": "Mô tả bộ câu hỏi",
-    "keywords": ["C++", "biến"],
-    "category": "Programming",
-    "difficulty": "Easy",
-    "data": [
-        {
-            "question": "Biến trong C++ là gì?",
-            "options": [
-                "Đáp án A",
-                "Đáp án B",
-                "Đáp án C",
-                "Đáp án D"
-            ],
-            "answer": 0,
-            "explanation": "Giải thích đáp án đúng"
-        }
-    ]
-}
-```
-
-| Trường | Bắt buộc | Mô tả |
-| --- | --- | --- |
-| `title` | ✅ | Tên bộ câu hỏi |
-| `author` | ✅ | Tác giả |
-| `description` | ✅ | Mô tả |
-| `keywords` | ✅ | Từ khóa |
-| `category` | ✅ | Danh mục |
-| `difficulty` | ✅ | Độ khó |
-| `data` | ✅ | Mảng câu hỏi |
-| `data[].question` | ✅ | Nội dung câu hỏi |
-| `data[].options` | ✅ | Mảng đáp án |
-| `data[].answer` | ✅ | Index đáp án đúng (bắt đầu từ 0) |
-| `data[].explanation` | ❌ | Giải thích |
-
----
-
-## 🔄 Quy trình Pull Request
-
-### Bước 1: Fork và tạo nhánh
-
-```bash
-git checkout -b feat/ten-mon-hoc
-```
-
-### Bước 2: Thêm/sửa nội dung theo hướng dẫn trên
-
-### Bước 3: Kiểm tra
-
-```bash
-npm run lint    # Kiểm tra format
-npm run build   # Thử build local
-```
-
-### Bước 4: Tạo Pull Request
-
-- PR phải target nhánh `main`
-- Điền đầy đủ PR template:
-  - ✅ Check tất cả checkbox bắt buộc
-  - Mô tả thay đổi
-  - Liệt kê môn học liên quan
-
-### Bước 5: Review
-
-- CI sẽ tự động chạy lint và build
-- Cần ít nhất 1 approve để merge
-
----
-
-## ⚙️ CI/CD
-
-| Workflow | Trigger | Mô tả |
-| --- | --- | --- |
-| **PR Check** | Pull Request → `main` | Validate checkbox, lint, test build |
-| **Deploy** | Push → `main` | Build và deploy sang nhánh `public` |
-
-### GitHub Pages
-
-Sau khi deploy, dữ liệu có thể truy cập qua:
-
-```
-https://<username>.github.io/study-repository/main.json
-https://<username>.github.io/study-repository/courses/ProgrammingTechniques.json
-https://<username>.github.io/study-repository/data/IT/ProgrammingTechniques/docs/chuong-1.md
-```
-
-**Cài đặt GitHub Pages:**
-1. Vào Settings → Pages
-2. Source: **Deploy from a branch**
-3. Branch: `public` / `/ (root)`
-
----
-
-## 📊 API Output
-
-### `main.json` — Danh sách tất cả môn học
-
-```json
-[
-    {
-        "courseName": "Kỹ thuật lập trình",
-        "courseCode": "ITEC1504",
-        "courseCredit": "3",
-        "courseType": "MAJOR",
-        "courseDescription": "...",
-        "thumbnail": "data/IT/ProgrammingTechniques/info/thumbnail.jpg",
-        "faculty": "IT",
-        "include": "courses/ProgrammingTechniques.json"
-    }
-]
-```
-
-### `courses/{MonHoc}.json` — Chi tiết môn học
-
-```json
-{
-    "courseName": "Kỹ thuật lập trình",
-    "courseCode": "ITEC1504",
-    "courseCredit": "3",
-    "courseType": "MAJOR",
-    "courseDescription": "...",
-    "thumbnail": "data/IT/ProgrammingTechniques/info/thumbnail.jpg",
-    "faculty": "IT",
-    "docs": [
-        {
-            "title": "Chương 1: Giới thiệu",
-            "author": "...",
-            "date": "...",
-            "summary": "...",
-            "keywords": ["..."],
-            "thumbnail": "data/IT/ProgrammingTechniques/docs/images/thumbnail-c1.jpg",
-            "file": "data/IT/ProgrammingTechniques/docs/chuong-1.md"
-        }
-    ],
-    "exams": [
-        {
-            "title": "Đề thi cuối kì 2025",
-            "author": "...",
-            "date": "...",
-            "summary": "...",
-            "keywords": ["..."],
-            "file": "data/IT/ProgrammingTechniques/exams/cuoi-ki-2025.md"
-        }
-    ],
-    "qa": [
-        {
-            "title": "Biến trong C++",
-            "author": "John Doe",
-            "description": "...",
-            "keywords": ["..."],
-            "category": "Programming",
-            "difficulty": "Easy",
-            "data": ["..."],
-            "file": "data/IT/ProgrammingTechniques/qa/c1.json"
-        }
-    ]
-}
-```
-
----
-
-## 📜 License
-
-Xem file [LICENSE](LICENSE).
+- `CONTRIBUTING.md`

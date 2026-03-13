@@ -1,0 +1,19 @@
+{
+    "title": "Chương 2: Giới thiệu về môn học 2",
+    "description": "Chương này cung cấp một cái nhìn tổng quan về môn học, bao gồm mục tiêu, nội dung chính và cách thức đánh giá.",
+    "objectives": [
+        "Hiểu được mục tiêu của môn học",
+        "Nắm bắt được nội dung chính của chương trình học",
+        "Biết cách thức đánh giá và yêu cầu của môn học"
+    ],
+    "authors": ["Giảng viên: Nguyễn Văn A"],
+    "date": "2024-06-01",
+    "keywords": ["giới thiệu", "mục tiêu", "nội dung", "đánh giá"],
+    "thumbnail": "./demo.jpg",
+    "attachments": [
+        {
+            "name": "Tài liệu tham khảo",
+            "url": "./tai-lieu-tham-khao.pdf"
+        }
+    ]
+}
