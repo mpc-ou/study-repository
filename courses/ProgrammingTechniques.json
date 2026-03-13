@@ -1,0 +1,72 @@
+{
+  "courseName": "Kỹ thuật lập trình",
+  "courseCode": "ITEC1504",
+  "courseCredit": "3",
+  "courseType": "MAJOR",
+  "courseDescription": "Là môn học cung cấp kiến thức cơ bản về lập trình, giúp sinh viên nắm vững các khái niệm và kỹ thuật lập trình cơ bản, từ đó phát triển kỹ năng giải quyết vấn đề và xây dựng các ứng dụng phần mềm.",
+  "thumbnail": "data/IT/ProgrammingTechniques/thumbnail.jpg",
+  "faculty": "IT",
+  "docs": [
+    {
+      "slug": "chuong-1",
+      "title": "Chương 1: Mảng 2 chiều",
+      "description": "Chương này giới thiệu về mảng 2 chiều, cách khai báo, khởi tạo và sử dụng mảng 2 chiều trong lập trình.",
+      "author": "MPC",
+      "authors": [
+        "MPC"
+      ],
+      "date": "2025-01-01",
+      "keywords": [
+        "mảng 2 chiều",
+        "lập trình",
+        "cấu trúc dữ liệu"
+      ],
+      "info": "data/IT/ProgrammingTechniques/[docs]/chuong-1/info.json",
+      "content": "data/IT/ProgrammingTechniques/[docs]/chuong-1/content.md",
+      "contentType": "md",
+      "attachments": []
+    }
+  ],
+  "exams": [
+    {
+      "slug": "de-thi-ky-thuat-lap-trinh-2025-mau",
+      "title": "Đề thi kỹ thuật lập trình 2025 mẫu",
+      "description": "Đây là đề thi mẫu cho môn kỹ thuật lập trình năm 2025, giúp sinh viên làm quen với cấu trúc và nội dung của đề thi thực tế.",
+      "author": "MPC",
+      "authors": [
+        "MPC"
+      ],
+      "date": "2025-01-01",
+      "keywords": [
+        "đề thi kỹ thuật lập trình",
+        "mẫu đề thi",
+        "lập trình"
+      ],
+      "info": "data/IT/ProgrammingTechniques/[exams]/de-thi-ky-thuat-lap-trinh-2025-mau/info.json",
+      "content": "data/IT/ProgrammingTechniques/[exams]/de-thi-ky-thuat-lap-trinh-2025-mau/DeMau.pdf",
+      "contentType": "pdf",
+      "attachments": []
+    }
+  ],
+  "qa": [
+    {
+      "slug": "c1",
+      "title": "Chương 1: Mảng nhiều chiều",
+      "author": "MPC",
+      "description": "Bộ câu hỏi trắc nghiệm chương 1 về Mảng nhiều chiều trong C++ bao gồm lý thuyết khai báo, khởi tạo, truy xuất và các bài tập thực hành trên ma trận.",
+      "keywords": [
+        "C++",
+        "mảng 2 chiều",
+        "kiểu dữ liệu",
+        "khai báo biến",
+        "trắc nghiệm",
+        "ma trận"
+      ],
+      "category": "Programming",
+      "difficulty": "Medium",
+      "file": "data/IT/ProgrammingTechniques/[qa]/c1.json",
+      "format": "json",
+      "questionCount": 15
+    }
+  ]
+}

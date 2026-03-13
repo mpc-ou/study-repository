@@ -1,0 +1,63 @@
+[
+  {
+    "id": 0,
+    "type": "doc",
+    "slug": "chuong-1",
+    "title": "Chương 1: Mảng 2 chiều",
+    "author": "MPC",
+    "date": "2025-01-01",
+    "summary": "Chương này giới thiệu về mảng 2 chiều, cách khai báo, khởi tạo và sử dụng mảng 2 chiều trong lập trình.",
+    "keywords": [
+      "mảng 2 chiều",
+      "lập trình",
+      "cấu trúc dữ liệu"
+    ],
+    "faculty": "IT",
+    "course": "ProgrammingTechniques",
+    "courseName": "Kỹ thuật lập trình",
+    "courseCode": "ITEC1504",
+    "file": "data/IT/ProgrammingTechniques/[docs]/chuong-1/content.md"
+  },
+  {
+    "id": 1,
+    "type": "exam",
+    "slug": "de-thi-ky-thuat-lap-trinh-2025-mau",
+    "title": "Đề thi kỹ thuật lập trình 2025 mẫu",
+    "author": "MPC",
+    "date": "2025-01-01",
+    "summary": "Đây là đề thi mẫu cho môn kỹ thuật lập trình năm 2025, giúp sinh viên làm quen với cấu trúc và nội dung của đề thi thực tế.",
+    "keywords": [
+      "đề thi kỹ thuật lập trình",
+      "mẫu đề thi",
+      "lập trình"
+    ],
+    "faculty": "IT",
+    "course": "ProgrammingTechniques",
+    "courseName": "Kỹ thuật lập trình",
+    "courseCode": "ITEC1504",
+    "file": "data/IT/ProgrammingTechniques/[exams]/de-thi-ky-thuat-lap-trinh-2025-mau/DeMau.pdf"
+  },
+  {
+    "id": 2,
+    "type": "qa",
+    "slug": "c1",
+    "title": "Chương 1: Mảng nhiều chiều",
+    "author": "MPC",
+    "summary": "Bộ câu hỏi trắc nghiệm chương 1 về Mảng nhiều chiều trong C++ bao gồm lý thuyết khai báo, khởi tạo, truy xuất và các bài tập thực hành trên ma trận.",
+    "keywords": [
+      "C++",
+      "mảng 2 chiều",
+      "kiểu dữ liệu",
+      "khai báo biến",
+      "trắc nghiệm",
+      "ma trận"
+    ],
+    "category": "Programming",
+    "difficulty": "Medium",
+    "faculty": "IT",
+    "course": "ProgrammingTechniques",
+    "courseName": "Kỹ thuật lập trình",
+    "courseCode": "ITEC1504",
+    "file": "data/IT/ProgrammingTechniques/[qa]/c1.json"
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-03-13T14:18:24.951Z",
+  "totalFaculties": 1,
+  "totalCourses": 1,
+  "totalDocs": 1,
+  "totalExams": 1,
+  "totalQaSets": 1,
+  "totalQaQuestions": 15,
+  "totalAuthors": 1,
+  "totalKeywords": 10,
+  "coursesByType": {
+    "MAJOR": 1
+  },
+  "qaByDifficulty": {
+    "Medium": 1
+  },
+  "authors": [
+    "MPC"
+  ],
+  "faculties": [
+    {
+      "name": "IT",
+      "totalCourses": 1,
+      "totalDocs": 1,
+      "totalExams": 1,
+      "totalQaSets": 1,
+      "totalQaQuestions": 15,
+      "courses": [
+        {
+          "name": "ProgrammingTechniques",
+          "courseName": "Kỹ thuật lập trình",
+          "courseCode": "ITEC1504",
+          "docs": 1,
+          "exams": 1,
+          "qaSets": 1,
+          "qaQuestions": 15
+        }
+      ]
+    }
+  ]
+}
